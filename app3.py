@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 from datetime import datetime, timedelta
 import uuid
 from functools import wraps
+import os
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # In production, use a secure environment variable
@@ -292,4 +293,8 @@ class ProjectById(Resource):
         }, 200
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    
+    # IMPORTANT: Bind to 0.0.0.0 instead of 127.0.0.1 for Render.com
+    app.run(host='0.0.0.0', port=port, debug=False)
