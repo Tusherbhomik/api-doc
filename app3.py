@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_restx import Api, Resource, fields
 from datetime import datetime
 import uuid
+import os
 
 app = Flask(__name__)
 api = Api(app, version='1.0', title='Platform Connect API',
@@ -290,4 +291,7 @@ class ProjectAnalytics(Resource):
         pass
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    # Run the app on all network interfaces (0.0.0.0)
+    app.run(host='0.0.0.0', port=port, debug=False) 
